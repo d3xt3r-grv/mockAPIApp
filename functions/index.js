@@ -30,6 +30,8 @@ app.get('/auth', isAuthenticated, function (req, res) {
 })
 
 app.post('/addAPI', isAuthenticated,addAPI);
+app.post('/exists', isAuthenticated,exists);
+
 
 app.use('/', function(req, res) {
 	res.json({
@@ -43,6 +45,35 @@ app.use(function(req, res, next) {
 	next();
 });
 
+function exists(req,res)
+{
+	var sub=req.body.sub;
+	var type= req.body.type;
+	var route=req.body.route;
+	var project=req.body.project;
+	console.log(sub+project+route+type);
+	users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
+	.then((snapshot)=>{
+		if(snapshot.exists)
+		{
+			return res.json({
+				exists:true
+			})
+		}
+		else {
+			return res.json({
+				exists:false
+			})
+		}
+	})
+	.catch(err => {
+		return res.status(400).json({
+			success:false,
+			message:'error from database'
+		})
+	})
+}
+
 function addAPI(req,res)
 {
 	var sub=req.body.sub;
@@ -51,73 +82,142 @@ function addAPI(req,res)
 	var project=req.body.project;
 	if(type=='GET')
 	{
-		var header=req.body.headers;
-		var params=req.body.params;
-		var response=req.body.response;
-		var data={
-			header:header,
-			params:params,
-			response:response
-		}
-		if(sub==undefined || project==undefined||route==undefined||type==undefined)
-		{
-			return res.send(400).json({
-				success:false,
-				message:'incomplete parameters'
-			})
-		}
-		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').set(data);
-		return res.status(200).json({
-			success:true,
-			message:'GET mock created'
+		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
+		.then((snapshot)=>{
+			if(snapshot.exists)
+			{
+				return res.json({
+					success:false,
+					message:'endpoint already exists in same project'
+				})
+			}
+			else {
+				//code here
+				var header=req.body.headers;
+				var params=req.body.params;
+				var response=req.body.response;
+				var data={
+					header:header,
+					params:params,
+					response:response
+				}
+				if(sub==undefined || project==undefined||route==undefined||type==undefined)
+				{
+					return res.send(400).json({
+						success:false,
+						message:'incomplete parameters'
+					})
+				}
+				users.doc(sub).collection(project).doc(route).collection(type).doc('fields').set(data);
+				return res.status(200).json({
+					success:true,
+					message:'GET mock created'
+				})
+			}
+
 		})
-	}
-	else if (type=='POST' || 'PUT' )
-	{
-		var header=req.body.headers;
-		var body=req.body.body;
-		var response=req.body.response;
-		var data={
-			header:header,
-			body:body,
-			response:response
-		}
-		if(sub==undefined || project==undefined||route==undefined||type==undefined)
-		{
-			return res.send(400).json({
+		.catch(err => {
+			return res.status(400).json({
 				success:false,
-				message:'incomplete parameters'
+				message:'error from database'
 			})
-		}
-		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').set(data);
-		return res.status(200).json({
-			success:true,
-			message:type+' mock created'
+		})
+
+	}
+	else if (type=='POST' || type=='PUT' )
+	{
+		console.log(sub+project+route+type);
+		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
+		.then((snapshot)=>{
+			if(snapshot.exists)
+			{
+				return res.json({
+					success:false,
+					message:'endpoint already exists in same project'
+				})
+			}
+			else {
+				//code here
+				var header=req.body.headers;
+				var body=req.body.body;
+				var response=req.body.response;
+				var data={
+					header:header,
+					body:body,
+					response:response
+				}
+				if(sub==undefined || project==undefined||route==undefined||type==undefined)
+				{
+					return res.send(400).json({
+						success:false,
+						message:'incomplete parameters'
+					})
+				}
+				users.doc(sub).collection(project).doc(route).collection(type).doc('fields').set(data);
+				return res.status(200).json({
+					success:true,
+					message:type+' mock created'
+				})
+			}
+		})
+		.catch(err => {
+			return res.status(400).json({
+				success:false,
+				message:err
+			})
 		})
 	}
 	else if(type=="DELETE")
 	{
-		var header=req.body.headers;
-		var body=req.body.body;
-		var response=req.body.response;
-		var params=req.body.params;
-		var data={
-			header:header,
-			body:body,
-			params:params,
-			response:response
-		}
-		if(sub==undefined || project==undefined||route==undefined||type==undefined)
-		{
-			return res.send(400).json({
+		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
+		.then((snapshot)=>{
+			if(snapshot.exists)
+			{
+				return res.json({
+					success:false,
+					message:'endpoint already exists in same project'
+				})
+			}
+			else {
+				//code here
+				var header=req.body.headers;
+				var body=req.body.body;
+				var response=req.body.response;
+				var params=req.body.params;
+				if(params===undefined)
+				{
+					var data={
+						header:header,
+						body:body,
+						response:response
+					}
+				}
+				else if (body==undefined) {
+					var data={
+						header:header,
+						params:params,
+						response:response
+					}
+				}
+				if(sub==undefined || project==undefined||route==undefined||type==undefined)
+				{
+					return res.send(400).json({
+						success:false,
+						message:'incomplete parameters'
+					})
+				}
+				users.doc(sub).collection(project).doc(route).collection(type).doc('fields').set(data);
+				return res.status(200).json({
+					success:true,
+					message:'DELETE mock created'
+				})
+			}
+		})
+		.catch(err => {
+			return res.status(400).json({
 				success:false,
-				message:'incomplete parameters'
+				message:'error from database'
 			})
-		}
-		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').set(data);
-		return res.status(200).json({
-			success:true,
-			message:'DELETE mock created'
 		})
 	}
 }
