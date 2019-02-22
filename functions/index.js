@@ -32,6 +32,11 @@ app.get('/auth', isAuthenticated, function (req, res) {
 app.post('/addAPI', isAuthenticated,addAPI);
 app.post('/exists', isAuthenticated,exists);
 
+app.get('/serve/*',serveGetDeleteAPI);
+app.post('/serve/*',servePutPostAPI);
+app.put('/serve/*',servePutPostAPI);
+app.delete('/serve/*', serveGetDeleteAPI);
+
 
 app.use('/', function(req, res) {
 	res.json({
@@ -181,24 +186,24 @@ function addAPI(req,res)
 			else {
 				//code here
 				var header=req.body.headers;
-				var body=req.body.body;
+				// var body=req.body.body;
 				var response=req.body.response;
 				var params=req.body.params;
-				if(params===undefined)
-				{
-					var data={
-						header:header,
-						body:body,
-						response:response
-					}
-				}
-				else if (body==undefined) {
+				// if(params===undefined)
+				// {
+				// 	var data={
+				// 		header:header,
+				// 		body:body,
+				// 		response:response
+				// 	}
+				// }
+				// else if (body==undefined) {
 					var data={
 						header:header,
 						params:params,
 						response:response
 					}
-				}
+				// }
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
 					return res.send(400).json({
@@ -220,6 +225,131 @@ function addAPI(req,res)
 			})
 		})
 	}
+}
+
+function serveGetDeleteAPI(req,res)
+{
+	// console.log(req.url);
+	// var array=req.url.split('/');
+	// console.log(array);
+	// console.log(req.method);
+	// var a=array.indexOf('serve');
+	// var cred=array.slice(array.indexOf('serve')+1,array.indexOf('serve')+4);
+	// console.log(cred);
+	// res.send('working');
+	var url=req.url;
+	var arr=(url.split('/')).slice((url.split('/')).indexOf('serve')+1,(url.split('/')).indexOf('serve')+4);
+	var temp=arr[2].split('?');
+	arr[2]=temp[0];
+	console.log(arr);
+	var sub=arr[0];
+	var project=arr[1];
+	var url=arr[2];
+	var reqHeaders=req.headers;
+	var reqParams=req.query;
+	console.log(reqHeaders);
+	console.log(reqParams);
+	users.doc(sub).collection(project).doc(url).collection(req.method).doc('fields').get()
+	.then((snapshot)=>{
+		if(!snapshot.exists){
+			return res.json({
+				error:'route undefined'
+			})
+		}
+		else {
+			console.log(snapshot.data());
+			let header=snapshot.data().header;
+			let params=snapshot.data().params;
+			let response=snapshot.data().response;
+			for(let key in header){
+				if(reqHeaders[key]!==header[key]){
+					console.log('invalid header');
+					return res.json({
+						success:false,
+						message:'invalid/incomplete headers'
+					})
+				}
+			}
+			for(let key in params){
+				if(reqParams[key]==null || reqParams[key]==undefined){
+					console.log('missing parameter');
+					return res.json({
+						success:false,
+						message:'missing parameters'
+					})
+				}
+			}
+			return res.json(response);
+		}
+	})
+	.catch(err => {
+		return res.json({
+			err:err
+		})
+	})
+}
+
+function servePutPostAPI(req,res)
+{
+	// console.log(req.url);
+	// var array=req.url.split('/');
+	// console.log(array);
+	// console.log(req.method);
+	// var a=array.indexOf('serve');
+	// var cred=array.slice(array.indexOf('serve')+1,array.indexOf('serve')+4);
+	// console.log(cred);
+	// res.send('working');
+	var url=req.url;
+	var arr=(url.split('/')).slice((url.split('/')).indexOf('serve')+1,(url.split('/')).indexOf('serve')+4);
+	var temp=arr[2].split('?');
+	arr[2]=temp[0];
+	console.log(arr);
+	var sub=arr[0];
+	var project=arr[1];
+	var url=arr[2];
+	var reqHeaders=req.headers;
+	var reqBody=req.body;
+	console.log(reqHeaders);
+	console.log(reqBody);
+	console.log(req.method);
+	users.doc(sub).collection(project).doc(url).collection(req.method).doc('fields').get()
+	.then((snapshot)=>{
+		if(!snapshot.exists){
+			return res.json({
+				error:'route undefined'
+			})
+		}
+		else {
+			console.log(snapshot.data());
+			let header=snapshot.data().header;
+			let body=snapshot.data().body;
+			let response=snapshot.data().response;
+			for(let key in header){
+				if(reqHeaders[key]!==header[key]){
+					console.log('invalid header');
+					return res.json({
+						success:false,
+						message:'invalid/incomplete headers'
+					})
+				}
+			}
+			for(let key in body){
+				if(reqBody[key]==null || reqBody[key]==undefined){
+					console.log('missing body parameter');
+					return res.json({
+						success:false,
+						message:'missing body parameters'
+					})
+				}
+			}
+			return res.json(response);
+		}
+	})
+	.catch(err => {
+		return res.json({
+			err:err
+		})
+	})
 }
 
 function googleLogin(req, response) {
