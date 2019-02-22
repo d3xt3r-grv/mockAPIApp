@@ -31,6 +31,7 @@ app.get('/auth', isAuthenticated, function (req, res) {
 
 app.post('/addAPI', isAuthenticated,addAPI);
 app.post('/exists', isAuthenticated,exists);
+app.put('/addAPI',isAuthenticated,updateAPI);
 
 app.get('/serve/*',serveGetDeleteAPI);
 app.post('/serve/*',servePutPostAPI);
@@ -227,6 +228,157 @@ function addAPI(req,res)
 	}
 }
 
+function updateAPI(req,res)
+{
+	var sub=req.body.sub;
+	var type= req.body.type;
+	var route=req.body.route;
+	var project=req.body.project;
+	if(type=='GET')
+	{
+		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
+		.then((snapshot)=>{
+			if(snapshot.exists)
+			{
+				var header=req.body.headers;
+				var params=req.body.params;
+				var response=req.body.response;
+				var data={
+					header:header,
+					params:params,
+					response:response
+				}
+				if(sub==undefined || project==undefined||route==undefined||type==undefined)
+				{
+					return res.send(400).json({
+						success:false,
+						message:'incomplete parameters'
+					})
+				}
+				users.doc(sub).collection(project).doc(route).collection(type).doc('fields').set(data);
+				return res.status(200).json({
+					success:true,
+					message:'GET mock updated'
+				})
+			}
+			else {
+				//code here
+				return res.json({
+					success:false,
+					message:'endpoint does not exists in the project'
+				})
+
+			}
+
+		})
+		.catch(err => {
+			return res.status(400).json({
+				success:false,
+				message:'error from database'
+			})
+		})
+
+	}
+	else if (type=='POST' || type=='PUT' )
+	{
+		console.log(sub+project+route+type);
+		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
+		.then((snapshot)=>{
+			if(snapshot.exists)
+			{
+				var header=req.body.headers;
+				var body=req.body.body;
+				var response=req.body.response;
+				var data={
+					header:header,
+					body:body,
+					response:response
+				}
+				if(sub==undefined || project==undefined||route==undefined||type==undefined)
+				{
+					return res.send(400).json({
+						success:false,
+						message:'incomplete parameters'
+					})
+				}
+				users.doc(sub).collection(project).doc(route).collection(type).doc('fields').set(data);
+				return res.status(200).json({
+					success:true,
+					message:type+' mock updated'
+				})
+
+			}
+			else {
+				//code here
+				return res.json({
+					success:false,
+					message:'endpoint does not exists in the project'
+				})
+			}
+		})
+		.catch(err => {
+			return res.status(400).json({
+				success:false,
+				message:err
+			})
+		})
+	}
+	else if(type=="DELETE")
+	{
+		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
+		.then((snapshot)=>{
+			if(snapshot.exists)
+			{
+				var header=req.body.headers;
+				// var body=req.body.body;
+				var response=req.body.response;
+				var params=req.body.params;
+				// if(params===undefined)
+				// {
+				// 	var data={
+				// 		header:header,
+				// 		body:body,
+				// 		response:response
+				// 	}
+				// }
+				// else if (body==undefined) {
+					var data={
+						header:header,
+						params:params,
+						response:response
+					}
+				// }
+				if(sub==undefined || project==undefined||route==undefined||type==undefined)
+				{
+					return res.send(400).json({
+						success:false,
+						message:'incomplete parameters'
+					})
+				}
+				users.doc(sub).collection(project).doc(route).collection(type).doc('fields').set(data);
+				return res.status(200).json({
+					success:true,
+					message:'DELETE mock updated'
+				})
+			}
+			else {
+				//code here
+				return res.json({
+					success:false,
+					message:'endpoint already exists in same project'
+				})
+
+			}
+		})
+		.catch(err => {
+			return res.status(400).json({
+				success:false,
+				message:'error from database'
+			})
+		})
+	}
+}
+
 function serveGetDeleteAPI(req,res)
 {
 	// console.log(req.url);
@@ -252,7 +404,7 @@ function serveGetDeleteAPI(req,res)
 	users.doc(sub).collection(project).doc(url).collection(req.method).doc('fields').get()
 	.then((snapshot)=>{
 		if(!snapshot.exists){
-			return res.json({
+			return res.status(404).json({
 				error:'route undefined'
 			})
 		}
@@ -264,7 +416,7 @@ function serveGetDeleteAPI(req,res)
 			for(let key in header){
 				if(reqHeaders[key]!==header[key]){
 					console.log('invalid header');
-					return res.json({
+					return res.status(400).json({
 						success:false,
 						message:'invalid/incomplete headers'
 					})
@@ -273,13 +425,13 @@ function serveGetDeleteAPI(req,res)
 			for(let key in params){
 				if(reqParams[key]==null || reqParams[key]==undefined){
 					console.log('missing parameter');
-					return res.json({
+					return res.status(400).json({
 						success:false,
 						message:'missing parameters'
 					})
 				}
 			}
-			return res.json(response);
+			return res.status(200).json(response);
 		}
 	})
 	.catch(err => {
@@ -315,7 +467,7 @@ function servePutPostAPI(req,res)
 	users.doc(sub).collection(project).doc(url).collection(req.method).doc('fields').get()
 	.then((snapshot)=>{
 		if(!snapshot.exists){
-			return res.json({
+			return res.status(404).json({
 				error:'route undefined'
 			})
 		}
@@ -327,7 +479,7 @@ function servePutPostAPI(req,res)
 			for(let key in header){
 				if(reqHeaders[key]!==header[key]){
 					console.log('invalid header');
-					return res.json({
+					return res.status(400).json({
 						success:false,
 						message:'invalid/incomplete headers'
 					})
@@ -336,13 +488,13 @@ function servePutPostAPI(req,res)
 			for(let key in body){
 				if(reqBody[key]==null || reqBody[key]==undefined){
 					console.log('missing body parameter');
-					return res.json({
+					return res.status(400).json({
 						success:false,
 						message:'missing body parameters'
 					})
 				}
 			}
-			return res.json(response);
+			return res.status(200).json(response);
 		}
 	})
 	.catch(err => {
