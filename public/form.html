@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Create API</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Details of mock API</h2>
+  <form class="form-horizontal" action="/action_page.php">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="project">Project:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="project" placeholder="Enter project name" name="project">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="path">Path:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="path" placeholder="Enter path for endpoint" name="path">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="type">Type:</label>
+
+    	<label class="radio-inline">
+      <input type="radio" name="optradio" id="type" value="GET" checked>GET
+    </label>
+    <label class="radio-inline">
+      <input type="radio" value="POST" id="type" name="optradio">POST
+    </label>
+    <label class="radio-inline">
+      <input type="radio" value="PUT" id="type"  name="optradio">PUT
+    </label>
+    <label class="radio-inline">
+      <input type="radio" value="DELETE" id="type" name="optradio">DELETE
+    </label>
+    </div>
+    
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+          <label><input type="checkbox" name="remember"> Remember me</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

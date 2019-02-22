@@ -13,14 +13,20 @@ admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
 
 const app = express();
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Credentials', true);
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
 app.use(bodyParser.urlencoded({extended:false}));
-
-
-const googleUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=';
 
 app.use(cors({
 	origin: true
 }));
+
+const googleUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=';
+
 
 let users = db.collection('users');
 
@@ -39,17 +45,14 @@ app.put('/serve/*',servePutPostAPI);
 app.delete('/serve/*', serveGetDeleteAPI);
 
 
+app.get('/myapis',isAuthenticated,myAPIs);
+
 app.use('/', function(req, res) {
 	res.json({
 		status: "connected",
 		message: "use another routes"
 	})
 })
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
 
 function exists(req,res)
 {
@@ -439,6 +442,19 @@ function serveGetDeleteAPI(req,res)
 			err:err
 		})
 	})
+}
+
+function myAPIs(req, res)
+{
+	var sub=req.body.sub;
+	users.doc(sub).get()
+	.then((snapshot)=>{
+		// console.log(snapshot);
+		for(let snap in snapshot){
+			users.doc(sub).collection(snap)
+		}
+	})
+	.catch(err => {console.log(err);})
 }
 
 function servePutPostAPI(req,res)
