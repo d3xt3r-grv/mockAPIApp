@@ -1,6 +1,6 @@
 
 
-let token=JSON.parse(localStorage.getItem('jwtToken'));
+let token=JSON.parse(localStorage.getItem('token'));
 $(function(){
  const $form = $('#events');
  //reset form
@@ -117,9 +117,16 @@ $(function(){
      let project= $('#project').val();
      let path= $('#path').val();
      let radioCheck=$("input[name='optradio']:checked").val();
+	 let radioCheck2=$("input[name='optradio2']:checked").val();
+
      let txtString=$("#txtArea").val();
      // let msgBox={key1:txtString};
      let msgBox=txtString;
+	 if(radioCheck2=='JSON')
+     {
+        msgBox=JSON.parse(msgBox);
+     }
+     console.log(msgBox);
 
      // msgBox[key1]=txtString;
      let jsonToSend={
@@ -179,6 +186,11 @@ $(function(){
      console.log(jsonToSend);
     // let token=JSON.parse(localStorage.getItem('jwtToken'));
 	let baseURL='https://us-central1-mockapiserver.cloudfunctions.net/api/serve';
+	if(token==null|| token==undefined)
+	{
+		alert('please login!');
+		window.location.href="./index.html"
+	}
 	console.log(token);
      $.ajax({
 
