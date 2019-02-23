@@ -1,0 +1,330 @@
+body{
+    /*position:fixed;*/
+    background:url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/footer_lodyas.png);
+    animation:50s scroll infinite linear;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+@keyframes scroll{
+    100%{
+        background-position:0px -3000px;
+    }
+}
+.form_container{
+    width:30%;
+    background-color: white;
+    padding:30px 25px;
+    vertical-align: center;
+}
+label[for="item"]{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+}
+#items{
+    border:2px solid black;
+    border-radius: 10px;
+    padding:10px;
+}
+#items .item{
+    position: relative;
+    border:2px solid black;
+    border-width: 2px 0 0 0;
+    padding:1px;
+}
+.form-group{
+    position: relative;
+}
+.item{
+    display:flex;
+}
+.item .item_div{
+    flex-grow: 1;
+}
+.item .close_modal{
+    align-self: center;
+    height: 45px;
+}
+.close_modal{
+    align-self: flex-end;
+    flex-basis:50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@media only screen and (max-width:600px){
+    .form_container{
+        width:80%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+.submit{
+    width:100%;
+    height:50px;
+}
+.category.invalid{
+    border-color:tomato;
+}
+.category-text{
+    display: none;
+}
+.invalid-text{
+    color:red;
+    display: block;
+}
+#events .times{
+    display: flex;
+    justify-content: space-between;
+}
+#events .times .time_container{
+    flex-basis:45%;
+}
+.nav-item{
+    display: inline;
+}
+.search-form{
+    display: none;
+}
+.ex{
+    color:white;**
+}
+#inputData{
+    margin-top: 10%;
+}
+.xyz
+{
+    color: white;
+    font-family: 'Titillium Web', sans-serif;
+    /* font-size: 2em; */
+}
+.item{
+    margin-top: 20px;
+    margin-left: 80px;
+}
+.abc{
+    margin-left:50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body{
+    /*position:fixed;*/
+    background:url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/footer_lodyas.png);
+    animation:50s scroll infinite linear;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+@keyframes scroll{
+    100%{
+        background-position:0px -3000px;
+    }
+}
+.form_container{
+    width:30%;
+    background-color: white;
+    padding:30px 25px;
+    vertical-align: center;
+}
+label[for="item1"]{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+}
+#items1{
+    border:2px solid black;
+    border-radius: 10px;
+    padding:10px;
+}
+#items1 .item1{
+    position: relative;
+    border:2px solid black;
+    border-width: 2px 0 0 0;
+    padding:1px;
+}
+.form-group{
+    position: relative;
+}
+.item1{
+    display:flex;
+}
+.item1 .item1_div{
+    flex-grow: 1;
+}
+.item1 .close_modal{
+    align-self: center;
+    height: 45px;
+}
+.close_modal{
+    align-self: flex-end;
+    flex-basis:50px;
+    display: flex;
+    align-items1: center;
+    justify-content: center;
+}
+@media only screen and (max-width:600px){
+    .form_container{
+        width:80%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+.submit{
+    width:100%;
+    height:50px;
+}
+.category .invalid{
+    border-color:tomato;
+}
+.category-text{
+    display: none;
+}
+.invalid-text{
+    color:red;
+    display: block;
+}
+#events1 .items1{
+    display: flex;
+    justify-content: space-between;
+}
+#events1 .items1 .item1_container{
+    flex-basis:45%;
+}
+.nav-item1{
+    display: inline;
+}
+.search-form{
+    display: none;
+}
+.ex{
+    color:white;**
+}
+#inputData{
+    margin-top: 10%;
+}
+.xyz
+{
+    color: white;
+    font-family: 'Titillium Web', sans-serif;
+    /* font-size: 2em; */
+}
+.item1{
+    margin-top: 20px;
+    margin-left: 80px;
+}
+.abc{
+    margin-left:50px;
+}
+
+
+
+
+label[for="itemx"]{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+}
+#itemsx{
+    border:2px solid black;
+    border-radius: 10px;
+    padding:10px;
+}
+#itemsx .itemx{
+    position: relative;
+    border:2px solid black;
+    border-width: 2px 0 0 0;
+    padding:1px;
+}
+.form-group{
+    position: relative;
+}
+.itemx{
+    display:flex;
+}
+.itemx .itemx_div{
+    flex-grow: 1;
+}
+.itemx .close_modal{
+    align-self: center;
+    height: 45px;
+}
+.close_modal{
+    align-self: flex-end;
+    flex-basis:50px;
+    display: flex;
+    align-itemsx: center;
+    justify-content: center;
+}
+@media only screen and (max-width:600px){
+    .form_container{
+        width:80%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+.submit{
+    width:100%;
+    height:50px;
+}
+.category .invalid{
+    border-color:tomato;
+}
+.category-text{
+    display: none;
+}
+.invalid-text{
+    color:red;
+    display: block;
+}
+#eventsx .itemsx{
+    display: flex;
+    justify-content: space-between;
+}
+#eventsx .itemsx .itemx_container{
+    flex-basis:45%;
+}
+.nav-itemx{
+    display: inline;
+}
+.search-form{
+    display: none;
+}
+.ex{
+    color:white;**
+}
+#inputData{
+    margin-top: 10%;
+}
+.xyz
+{
+    color: white;
+    font-family: 'Titillium Web', sans-serif;
+    /* font-size: 2em; */
+}
+.itemx{
+    margin-top: 20px;
+    margin-left: 80px;
+}
+.abc{
+    margin-left:50px;
+}

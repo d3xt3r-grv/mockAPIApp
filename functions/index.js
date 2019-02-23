@@ -91,6 +91,7 @@ function addAPI(req,res)
 	var project=req.body.project;
 	if(type=='GET')
 	{
+		console.log(sub+project+route+type);
 		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
 		.then((snapshot)=>{
 			if(snapshot.exists)
@@ -105,11 +106,14 @@ function addAPI(req,res)
 				var header=req.body.headers;
 				var params=req.body.params;
 				var response=req.body.response;
-				var data={
-					header:header,
-					params:params,
-					response:response
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
 				}
+				if(params!=undefined){
+					data.params=params;
+				}
+				console.log(data);
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
 					return res.send(400).json({
@@ -150,11 +154,14 @@ function addAPI(req,res)
 				var header=req.body.headers;
 				var body=req.body.body;
 				var response=req.body.response;
-				var data={
-					header:header,
-					body:body,
-					response:response
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
 				}
+				if(body!=undefined){
+					data.body=body;
+				}
+				console.log(data);
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
 					return res.send(400).json({
@@ -202,11 +209,13 @@ function addAPI(req,res)
 				// 	}
 				// }
 				// else if (body==undefined) {
-					var data={
-						header:header,
-						params:params,
-						response:response
-					}
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
+				}
+				if(params!=undefined){
+					data.params=params;
+				}
 				// }
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
@@ -239,6 +248,7 @@ function updateAPI(req,res)
 	var project=req.body.project;
 	if(type=='GET')
 	{
+		console.log(sub+project+route+type);
 		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
 		.then((snapshot)=>{
 			if(snapshot.exists)
@@ -246,10 +256,12 @@ function updateAPI(req,res)
 				var header=req.body.headers;
 				var params=req.body.params;
 				var response=req.body.response;
-				var data={
-					header:header,
-					params:params,
-					response:response
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
+				}
+				if(params!=undefined){
+					data.params=params;
 				}
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
@@ -292,11 +304,14 @@ function updateAPI(req,res)
 				var header=req.body.headers;
 				var body=req.body.body;
 				var response=req.body.response;
-				var data={
-					header:header,
-					body:body,
-					response:response
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
 				}
+				if(body!=undefined){
+					data.body=body;
+				}
+				console.log(data);
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
 					return res.send(400).json({
@@ -345,11 +360,13 @@ function updateAPI(req,res)
 				// 	}
 				// }
 				// else if (body==undefined) {
-					var data={
-						header:header,
-						params:params,
-						response:response
-					}
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
+				}
+				if(params!=undefined){
+					data.params=params;
+				}
 				// }
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
