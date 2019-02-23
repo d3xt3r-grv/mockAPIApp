@@ -1,6 +1,6 @@
 
 
-let token=JSON.parse(localStorage.getItem('jwtToken'));
+let token=JSON.parse(localStorage.getItem('token'));
 $(function(){
  const $form = $('#events');
  //reset form
@@ -198,6 +198,9 @@ $(function(){
 
                     location.reload(true);
                 }
+				else{
+					alert(result.message);
+				}
             }
             else {
 
