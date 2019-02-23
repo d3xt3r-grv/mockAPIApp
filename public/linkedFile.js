@@ -118,7 +118,15 @@ $(function(){
      let path= $('#path').val();
      let radioCheck=$("input[name='optradio']:checked").val();
      let txtString=$("#txtArea").val();
-     let msgBox={key1:txtString};
+     let radioCheck2=$("input[name='optradio2']:checked").val();
+     console.log(radioCheck2);
+     // let msgBox={key1:txtString};
+     let msgBox=txtString;
+     if(radioCheck2=='JSON')
+     {
+        msgBox=JSON.parse(msgBox);
+     }
+     console.log(msgBox);
      // msgBox[key1]=txtString;
      let jsonToSend={
 
@@ -178,6 +186,11 @@ $(function(){
     // let token=JSON.parse(localStorage.getItem('jwtToken'));
 	let baseURL='https://us-central1-mockapiserver.cloudfunctions.net/api/serve';
 	console.log(token);
+	if(token==null|| token==undefined)
+	{
+		alert('please login!');
+		window.location.href="./index.html"
+	}
      $.ajax({
 
         url: "https://us-central1-mockapiserver.cloudfunctions.net/api/addAPI",
