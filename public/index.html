@@ -1,65 +1,235 @@
+<!DOCTYPE HTML>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
+<head>
+	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/5.8.3/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/5.8.3/firebase-auth.js"></script>
-    <script defer src="/__/firebase/5.8.3/firebase-database.js"></script>
-    <script defer src="/__/firebase/5.8.3/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/5.8.3/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+		        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		        <script
+		          src="https://code.jquery.com/jquery-3.3.1.js"
+		          integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		          crossorigin="anonymous"></script>
+		          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    <link rel="stylesheet" href="style.css">
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
+
     </script>
-  </body>
+	<title>Sign In</title>
+
+
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<meta name="google-signin-client_id" content="1005724032581-mvjnacfon7vc0urpfmfoi8ismo50slqb.apps.googleusercontent.com">
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark d-none" id="boot41">
+<div class="container-fluid">
+<a class="navbar-brand" href="./index.html">MockApiServer</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+  <!-- <li class="nav-item">
+	<a class="nav-link" href="./login.html" style="color:white; text-decoration:none;"><i class="fas fa-sign-in-alt"></i>&nbsp;Logout</a>
+  </li>
+ -->
+</ul>
+</div>
+</div>
+</nav>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" id="boot42">
+<div class="container-fluid">
+<a class="navbar-brand" href="./index.html">MockApiServer</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<!-- <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+<li class="nav-item">
+<a class="nav-link" href="./login.html" style="color:white; text-decoration:none;"><i class="fas fa-sign-in-alt"></i>&nbsp;Login</a>
+</li>
+</ul>
+</div>
+</div> -->
+</nav>
+	<div class="container">
+
+		<h1 style="color:white; margin-top:140px;margin-left:34.4%;">Welcome to MockApiServer</h1><br>
+				<div id="user" class="d-none" style="text-align: center; margin-top: 10px">
+					<h2 style='color: white;margin-left:5%;'></h2>
+				</div>
+				<div id="login"  style="margin-top:3%;margin-left:40%">
+					<!-- sign in button -->
+
+					<div id="my-signin2"></div>
+				</div>
+
+				<div  id="logged" style="margin-left:39.35%; margin-top:2%;" class="d-none">
+					<button id="profile" class="btn btn-primary">Add API</button>&nbsp;
+					<button id="profileUpdate" class="btn btn-primary">Update API</button>&nbsp;
+
+					<button onclick="signOut()" class="btn btn-danger">Sign Out</button>
+				</div>
+
+			</div>
+
+
+
+
+
+	<script type="text/javascript">
+
+
+
+	function onSuccess(googleUser) {
+	      var profile = googleUser.getBasicProfile();
+		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		console.log('Name: ' + profile.getName());
+		console.log('Image URL: ' + profile.getImageUrl());
+		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		console.log(profile.getName());
+		console.log(googleUser.getAuthResponse().id_token);
+
+		let token = googleUser.getAuthResponse().id_token;
+		let name = profile.getName();
+		console.log(profile);
+		console.log(profile.Eea);
+		localStorage.setItem('sub', profile.Eea);
+
+		// setUpPage(name);
+		console.log(name);
+		console.log($("#user"));
+		console.log($("#user"));
+		$("#user").children('h2').html("Hi "+ name+ "!" );
+		//location.reload(true);
+		$("#user").removeClass("d-none");
+
+		localStorage.setItem('userName', name);
+		console.log(localStorage.getItem('userName'));
+		$("#logged").removeClass("d-none");
+
+
+
+			$("#boot41").removeClass('d-none');
+			$("#boot42").addClass('d-none');
+
+
+		// location.reload();
+
+		requestFirebase(token);
+	    }
+
+
+			function onFailure(error) {
+			      console.log(error);
+
+			    }
+
+
+					function renderButton() {
+					      gapi.signin2.render('my-signin2', {
+					        'scope': 'profile email',
+					        'width': 240,
+					        'height': 50,
+					        'longtitle': true,
+					        'theme': 'dark',
+					        'onsuccess': onSuccess,
+					        'onfailure': onFailure
+					      });
+					    }
+					    $("#profile").click(()=>{
+					    	window.location.href="./apiGenerateForm.html"
+					    })
+					    $("#profileUpdate").click(()=>{
+					    	window.location.href="./updateApiForm.html"
+					    })
+
+
+function requestFirebase(token) {
+
+	$.ajax({
+
+		url: "https://us-central1-mockapiserver.cloudfunctions.net/api/login",
+		type: "POST",
+		data: {
+			"idToken": token
+		},
+		success: function(result, status) {
+
+			console.log("query baji");
+			if(status === 'success') {
+
+				console.log(result);
+				if(result.success === true) {
+
+					if(result.onBoard === false) {
+
+						// redirect to onBoard page
+
+						let jwttoken = result["data"]["token"];
+						localStorage.setItem('token', JSON.stringify(jwttoken));
+
+						window.location.href = "./index.html"
+					}
+					else {
+
+						// jwt.decode(token);
+						$('#username').val("userName");
+						let jwttoken = result["data"]["token"];
+						localStorage.setItem('token', JSON.stringify(jwttoken));
+						//
+						// $('#gLogin').hide();
+						// $('#gLogout').show();
+						 //location.reload(true);
+					//	window.location.href = "./main.html"
+					}
+					// location.reload(true);
+				}
+			}
+			else {
+
+				console.log("error occured while requesting");
+			}
+
+		}
+	})
+
+}
+
+
+
+
+function signOut() {
+
+	var auth2 = gapi.auth2.getAuthInstance();
+	auth2.signOut().then(function () {
+		console.log('User signed out.');
+		localStorage.removeItem('token');
+		$('#logged').hide();
+		$('#user').hide();
+		location.reload(true);
+	});
+}
+
+
+// let str=JSON.parse(localStorage.getItem('token'));
+// if(str!==null)
+// {
+// 	$("#boot41").removeClass('d-none');
+// 	$("#boot42").addClass('d-none');
+// }
+	</script>
+
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+<meta name="google-signin-client_id" content="1005724032581-mvjnacfon7vc0urpfmfoi8ismo50slqb.apps.googleusercontent.com">
+
+
+</body>
 </html>

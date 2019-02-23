@@ -385,7 +385,7 @@ function updateAPI(req,res)
 				//code here
 				return res.json({
 					success:false,
-					message:'endpoint already exists in same project'
+					message:'endpoint does not exist in the project'
 				})
 
 			}
