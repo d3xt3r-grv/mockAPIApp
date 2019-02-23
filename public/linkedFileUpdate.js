@@ -1,6 +1,6 @@
 
 
-let token=JSON.parse(localStorage.getItem('token'));
+let token=JSON.parse(localStorage.getItem('jwtToken'));
 $(function(){
  const $form = $('#events');
  //reset form
@@ -118,7 +118,9 @@ $(function(){
      let path= $('#path').val();
      let radioCheck=$("input[name='optradio']:checked").val();
      let txtString=$("#txtArea").val();
-     let msgBox={key1:txtString};
+     // let msgBox={key1:txtString};
+     let msgBox=txtString;
+
      // msgBox[key1]=txtString;
      let jsonToSend={
 
@@ -181,7 +183,7 @@ $(function(){
      $.ajax({
 
         url: "https://us-central1-mockapiserver.cloudfunctions.net/api/addAPI",
-        type: "POST",
+        type: "PUT",
         data: jsonToSend,
         headers:{
 	                     'Content-Type': "application/x-www-form-urlencoded",
@@ -194,13 +196,13 @@ $(function(){
 
                 console.log(result);
                 if(result.success === true) {
-                    alert('Copy the following Api link: '+baseURL+"/"+localStorage.getItem('sub')+"/"+project+"/"+path);
+                    alert('Copy the following updated Api link: '+baseURL+"/"+localStorage.getItem('sub')+"/"+project+"/"+path);
 
                     location.reload(true);
                 }
-				else{
-					alert(result.message);
-				}
+                else{
+                    alert(result.message);
+                }
             }
             else {
 
