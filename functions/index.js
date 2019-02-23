@@ -13,14 +13,20 @@ admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
 
 const app = express();
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Credentials', true);
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
 app.use(bodyParser.urlencoded({extended:false}));
-
-
-const googleUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=';
 
 app.use(cors({
 	origin: true
 }));
+
+const googleUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=';
+
 
 let users = db.collection('users');
 
@@ -39,17 +45,14 @@ app.put('/serve/*',servePutPostAPI);
 app.delete('/serve/*', serveGetDeleteAPI);
 
 
+app.get('/myapis',isAuthenticated,myAPIs);
+
 app.use('/', function(req, res) {
 	res.json({
 		status: "connected",
 		message: "use another routes"
 	})
 })
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
 
 function exists(req,res)
 {
@@ -88,6 +91,7 @@ function addAPI(req,res)
 	var project=req.body.project;
 	if(type=='GET')
 	{
+		console.log(sub+project+route+type);
 		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
 		.then((snapshot)=>{
 			if(snapshot.exists)
@@ -102,11 +106,14 @@ function addAPI(req,res)
 				var header=req.body.headers;
 				var params=req.body.params;
 				var response=req.body.response;
-				var data={
-					header:header,
-					params:params,
-					response:response
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
 				}
+				if(params!=undefined){
+					data.params=params;
+				}
+				console.log(data);
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
 					return res.send(400).json({
@@ -147,11 +154,14 @@ function addAPI(req,res)
 				var header=req.body.headers;
 				var body=req.body.body;
 				var response=req.body.response;
-				var data={
-					header:header,
-					body:body,
-					response:response
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
 				}
+				if(body!=undefined){
+					data.body=body;
+				}
+				console.log(data);
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
 					return res.send(400).json({
@@ -199,11 +209,13 @@ function addAPI(req,res)
 				// 	}
 				// }
 				// else if (body==undefined) {
-					var data={
-						header:header,
-						params:params,
-						response:response
-					}
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
+				}
+				if(params!=undefined){
+					data.params=params;
+				}
 				// }
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
@@ -236,6 +248,7 @@ function updateAPI(req,res)
 	var project=req.body.project;
 	if(type=='GET')
 	{
+		console.log(sub+project+route+type);
 		users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
 		.then((snapshot)=>{
 			if(snapshot.exists)
@@ -243,10 +256,12 @@ function updateAPI(req,res)
 				var header=req.body.headers;
 				var params=req.body.params;
 				var response=req.body.response;
-				var data={
-					header:header,
-					params:params,
-					response:response
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
+				}
+				if(params!=undefined){
+					data.params=params;
 				}
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
@@ -289,11 +304,14 @@ function updateAPI(req,res)
 				var header=req.body.headers;
 				var body=req.body.body;
 				var response=req.body.response;
-				var data={
-					header:header,
-					body:body,
-					response:response
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
 				}
+				if(body!=undefined){
+					data.body=body;
+				}
+				console.log(data);
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
 					return res.send(400).json({
@@ -342,11 +360,13 @@ function updateAPI(req,res)
 				// 	}
 				// }
 				// else if (body==undefined) {
-					var data={
-						header:header,
-						params:params,
-						response:response
-					}
+				var data={response:response};
+				if(header!=undefined){
+					data.header=header;
+				}
+				if(params!=undefined){
+					data.params=params;
+				}
 				// }
 				if(sub==undefined || project==undefined||route==undefined||type==undefined)
 				{
@@ -439,6 +459,19 @@ function serveGetDeleteAPI(req,res)
 			err:err
 		})
 	})
+}
+
+function myAPIs(req, res)
+{
+	var sub=req.body.sub;
+	users.doc(sub).get()
+	.then((snapshot)=>{
+		// console.log(snapshot);
+		for(let snap in snapshot){
+			users.doc(sub).collection(snap)
+		}
+	})
+	.catch(err => {console.log(err);})
 }
 
 function servePutPostAPI(req,res)

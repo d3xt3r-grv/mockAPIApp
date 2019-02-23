@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Create API</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="./linkedFile.js" type="text/javascript">
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:600i" rel="stylesheet">
+
+  </script>
+  <link rel="stylesheet" href="./linkedFile1.css">
+</head>
+<body>
+
+<div class="container">
+  <h2 class="xyz">Details of mock API</h2>
+  <form class="form-horizontal" action="/action_page.php">
+    <div class="form-group">
+      <label class="control-label xyz" for="project">Project:</label>
+      <br>
+      <div class="col">
+        <input type="text" class="form-control" id="project" placeholder="Enter project name" name="project" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label xyz" for="path">Path:</label>
+      <br>
+      <div class="col">
+        <input type="text" class="form-control" id="path" placeholder="Enter path for endpoint" name="path" required>
+      </div>
+    </div>
+    <label class="control-label xyz" for="type">Type:</label>
+    <div class="form-group xyz">
+
+
+        <label class="radio-inline">
+          <input type="radio" name="optradio" class="type" value="GET" id="get" required>GET
+        </label>
+
+        <label class="radio-inline">
+          <input type="radio" value="POST" class="type" name="optradio" id="post" required>POST
+        </label>
+
+        <label class="radio-inline">
+          <input type="radio" value="PUT" class="type"  name="optradio" id="put" required>PUT
+        </label>
+
+        <label class="radio-inline">
+          <input type="radio" value="DELETE" class="type" name="optradio" id="delete" required>DELETE
+        </label>
+
+    </div>
+
+    <div>
+        <div class="">
+        <h1 class="heading xyz">Request Headers</h1>
+            <form id="events1" action="#">
+
+                <div class="form-group" id="items1">
+                    <label for="item1"><span class="xyz">Headers</span><span id="add_item1" class="btn btn-primary">add header</span></label>
+                    <div class="hold_items1"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="item1">
+
+        <div class="item1_div">
+            <div class="form-group">
+                <!-- <small class="form-text">Product Name</small> -->
+                <input type="text" name="item1_name"  class="item1_name form-control" placeholder="key" required>
+            </div>
+            <div class="form-group">
+                <!-- <small class="form-text">Price</small> -->
+                <input type="text" name="item1_price" class="item1_price form-control" placeholder="value" required>
+            </div>
+        </div>
+        <div class="close_modal btn btn-danger abc">x</div>
+    </div>
+
+
+
+    <!--extra elements-->
+    <div>
+        <div class="">
+            <h1 class="heading xyz">Request Parameters/Data</h1>
+            <form id="events" action="#">
+
+                <div class="form-group" id="items">
+                    <label for="item"><span class="xyz">Parameters/Data</span><span id="add_item" class="btn btn-primary">add parameter</span></label>
+                    <div class="hold_items"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="item">
+
+        <div class="item_div">
+            <div class="form-group">
+                <!-- <small class="form-text">Product Name</small> -->
+                <input type="text" name="item_name"  class="item_name form-control" placeholder="key" required>
+            </div>
+            <div class="form-group">
+                <!-- <small class="form-text">Price</small> -->
+                <input type="text" name="item_price" class="item_price form-control" placeholder="value" required>
+            </div>
+        </div>
+        <div class="close_modal btn btn-danger abc">x</div>
+    </div>
+    <div>
+        <div class="">
+            <h1 class="heading xyz">Message/Response</h1>
+            <form id="eventsx" action="#">
+
+                <div class="form-group" id="itemsx">
+                    <textarea name="name" rows="4" cols="150" required id=txtArea></textarea>
+                    <div class="hold_itemsx"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+      <div class="col-offset">
+        <button type="submit" class="btn btn-default" id="submitForm">Submit</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+</body>
+</html>
