@@ -36,7 +36,7 @@ app.get('/auth', isAuthenticated, function (req, res) {
 })
 
 app.post('/addAPI', isAuthenticated,addAPI);
-app.post('/exists', isAuthenticated,exists);
+// app.post('/exists', isAuthenticated,exists);
 app.put('/addAPI',isAuthenticated,updateAPI);
 
 app.get('/serve/*',serveGetDeleteAPI);
@@ -44,6 +44,7 @@ app.post('/serve/*',servePutPostAPI);
 app.put('/serve/*',servePutPostAPI);
 app.delete('/serve/*', serveGetDeleteAPI);
 
+app.get('/se/*',urlpattern);
 
 app.get('/myapis',isAuthenticated,myAPIs);
 
@@ -54,33 +55,19 @@ app.use('/', function(req, res) {
 	})
 })
 
-function exists(req,res)
-{
-	var sub=req.body.sub;
-	var type= req.body.type;
-	var route=req.body.route;
-	var project=req.body.project;
-	console.log(sub+project+route+type);
-	users.doc(sub).collection(project).doc(route).collection(type).doc('fields').get()
-	.then((snapshot)=>{
-		if(snapshot.exists)
-		{
-			return res.json({
-				exists:true
-			})
-		}
-		else {
-			return res.json({
-				exists:false
-			})
-		}
-	})
-	.catch(err => {
-		return res.status(400).json({
-			success:false,
-			message:'error from database'
-		})
-	})
+function urlpattern(req,res){
+	var arr=req.url.split('/');
+	var url='';
+	var len=arr.length;
+	arr=arr.slice(arr.indexOf('se')+1,len);
+	len=arr.length;
+	var temp=arr[len-1].split('?')[0];
+	arr[len-1]=temp;
+	for(i=0;i<len;i++)
+	url+=arr[i];
+	console.log(url);
+	res.send('working');
+
 }
 
 function addAPI(req,res)
@@ -88,7 +75,11 @@ function addAPI(req,res)
 	var sub=req.body.sub;
 	var type= req.body.type;
 	var route=req.body.route;
+	route=route.replace(/\ /g,"");
+	route=route.replace(/\//g, "");
 	var project=req.body.project;
+	project=project.replace(/\ /g,"");
+	project=project.replace(/\//g, "");
 	if(type=='GET')
 	{
 		console.log(sub+project+route+type);
@@ -245,7 +236,11 @@ function updateAPI(req,res)
 	var sub=req.body.sub;
 	var type= req.body.type;
 	var route=req.body.route;
+	route=route.replace(/\ /g,"");
+	route=route.replace(/\//g, "");
 	var project=req.body.project;
+	project=project.replace(/\ /g,"");
+	project=project.replace(/\//g, "");
 	if(type=='GET')
 	{
 		console.log(sub+project+route+type);
@@ -416,7 +411,19 @@ function serveGetDeleteAPI(req,res)
 	console.log(arr);
 	var sub=arr[0];
 	var project=arr[1];
-	var url=arr[2];
+	// var url=arr[2];
+	var array=req.url.split('/');
+	var url1='';
+	var len=array.length;
+	array=array.slice(array.indexOf('serve')+1,len);
+	len=array.length;
+	var temp=array[len-1].split('?')[0];
+	array[len-1]=temp;
+	for(i=2;i<len;i++)
+	url1+=array[i];
+	// console.log(url);
+	url=url1;
+	console.log('\n'+sub+project+url+'\n');
 	var reqHeaders=req.headers;
 	var reqParams=req.query;
 	console.log(reqHeaders);
@@ -491,7 +498,18 @@ function servePutPostAPI(req,res)
 	console.log(arr);
 	var sub=arr[0];
 	var project=arr[1];
-	var url=arr[2];
+	// var url=arr[2];
+	var array=req.url.split('/');
+	var url1='';
+	var len=array.length;
+	array=array.slice(array.indexOf('serve')+1,len);
+	len=array.length;
+	var temp=array[len-1].split('?')[0];
+	array[len-1]=temp;
+	for(i=2;i<len;i++)
+	url1+=array[i];
+	// console.log(url);
+	url=url1;
 	var reqHeaders=req.headers;
 	var reqBody=req.body;
 	console.log(reqHeaders);
