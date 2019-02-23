@@ -207,7 +207,7 @@ $(function(){
 
                 console.log(result);
                 if(result.success === true) {
-                    alert('Copy the following Api link: '+baseURL+"/"+localStorage.getItem('sub')+"/"+project+"/"+path);
+                    alert('Copy the following Api link: '+baseURL+"/"+localStorage.getItem('sub')+"/"+project.replace(/\ /g,"")+"/"+path.replace(/\ /g,""));
 
                     location.reload(true);
                 }
